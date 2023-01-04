@@ -26,13 +26,36 @@ fn _common_collections() {
     v.push("Green");
     println!("Size: {}", v.len());
 
-
+    println!("Before popping: {:?}", v);
     v.pop();
-    println!("First element: ", &v[0]);
+    println!("After popping: {:?}", v);
     v.push("Green");
     v.push("Yellow");
     v.push("Turquoise");
     println!("{:?}", v);
+
+    for entry in v {
+        println!("Entry: {}", entry);
+    }
+
+    let mut s = String::new();
+    s.push_str("Hello");
+    println!("{s}");
+    s.pop();
+    println!("{s}");
+    s.push('o');
+
+    let s2 = String::from(" Rust");
+
+    // Value of s moved to s3
+    let s3 = s + &s2;
+
+    println!("{s3}");
+
+
+
+
+
 
 
 }
