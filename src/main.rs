@@ -1,4 +1,5 @@
 mod countries;
+use countries::powerful_countries::NuclearPowers;
 
 fn main() {
     println!("main() >>");
@@ -11,19 +12,41 @@ fn main() {
     //let sentence : String = String::from("My name is Krishnakumar");
     //_find_my_name_in_string(sentence, "Krishnakumar");
 
-    _work_on_struct();
+    //_work_on_struct();
+
+    _common_collections();
+
     println!("<< main()");
 }
+
+fn _common_collections() {
+    let mut v : Vec<&str> = Vec::new();
+    v.push("Red");
+    v.push("Blue");
+    v.push("Green");
+    println!("Size: {}", v.len());
+
+
+    v.pop();
+    println!("First element: ", &v[0]);
+    v.push("Green");
+    v.push("Yellow");
+    v.push("Turquoise");
+    println!("{:?}", v);
+
+
+}
+
 
 fn _work_on_struct() {
     let mut c1 : Country = Country {
         name: String::from("Sri Lanka"),
         currency: String::from("Rupee"),
-        military_partner: countries::_NuclearPowers::India
+        military_partner: NuclearPowers::India
     };
     println!("Before update: c1 = {:?}", c1);
 
-    c1.military_partner = countries::_NuclearPowers::USA;
+    c1.military_partner = NuclearPowers::USA;
 
     println!("After update: c1 = {:?}", c1);
 
@@ -35,7 +58,7 @@ fn _work_on_struct() {
     println!("c1 partially moved its values to c2 = {:?}", c2);
 
     //Calling method
-    let n1 : &countries::_NuclearPowers = c2.get_nuclear_source();
+    let n1 : &NuclearPowers = c2.get_nuclear_source();
     println!("Nuclear source of c2: {:?}", n1);
 }
 
@@ -43,12 +66,12 @@ fn _work_on_struct() {
 struct Country {
     name: String,
     currency:String,
-    military_partner: countries::_NuclearPowers,
+    military_partner: NuclearPowers,
 }
 
 // Methods and Associated functions
 impl Country {
-    fn get_nuclear_source(&self) -> &countries::_NuclearPowers {
+    fn get_nuclear_source(&self) -> &NuclearPowers {
         let s = &self.military_partner;
         s
     }
@@ -62,7 +85,6 @@ fn _find_my_name_in_string(sentence: String, find: &str) {
 
     let bytes_of_string = sentence.as_bytes();
     let tuple_of_byte = bytes_of_string.iter().enumerate();
-    let mut vec: Vec<usize> = Vec::new();
 
     for (index, &to_byte) in tuple_of_byte {
         unsafe {
@@ -70,17 +92,11 @@ fn _find_my_name_in_string(sentence: String, find: &str) {
         }
         if to_byte == b' ' {
             println!("Index of space: {}", index);
-            vec.push(index);
+            let string_slice = &sentence[0..index];
+            println!("String slice: {}", string_slice);
         }
     }
-    println!("Final vector: {:?}", vec);
-    for s_index in vec {
-        let string_slice = &sentence[0..s_index];
-        println!("String slice: {}", string_slice);
-    }
 }
-
-
 
 // Ownership rules
 // Each value in Rust has an owner.
@@ -173,10 +189,10 @@ fn _control_flow() {
         }
     }
 
-    let country:countries::_NuclearPowers = countries::_NuclearPowers::India;
+    let country:NuclearPowers = NuclearPowers::India;
 
     match country {
-        countries::_NuclearPowers::India => println!("It's India"),
+        NuclearPowers::India => println!("It's India"),
         _ => println!("It's not India")
     }
 

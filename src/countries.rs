@@ -1,4 +1,7 @@
-#[derive(Debug)]
-pub enum _NuclearPowers {
-        India, USA, England, Australia
+pub mod powerful_countries {
+        #[derive(Debug)]
+        pub enum NuclearPowers {
+                India, USA, England, Australia
+        }
 }
+
