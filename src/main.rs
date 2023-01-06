@@ -1,4 +1,9 @@
 mod countries;
+
+use std::fmt::{Display, Formatter};
+use std::fs::File;
+use std::io::{Read, Write};
+use std::path::Path;
 use countries::powerful_countries::NuclearPowers;
 
 fn main() {
@@ -14,9 +19,74 @@ fn main() {
 
     //_work_on_struct();
 
-    _common_collections();
+    //_common_collections();
+    //_generics();
+    _traits();
+
+
+    //_copy_from_file();
 
     println!("<< main()");
+}
+
+
+
+
+fn _copy_from_file() {
+    // Read from file1 and write to file2
+    let path1 = Path::new("resources/file1.txt");
+    let path2 = Path::new("resources/file2.txt");
+
+    let mut file1 = File::open(path1).unwrap();
+    let mut contents1 = String::new();
+    let size = file1.read_to_string(&mut contents1).unwrap();
+    println!("{} has {} letters", contents1, size);
+
+    let mut file = File::create(path2).unwrap();
+    file.write_all(contents1.as_bytes()).expect("Error found while writing");
+}
+
+fn _traits() {
+
+    let c1 = Country::new(String::from("Saudi Arabia"));
+    println!("{}", c1);
+    let f = c1.get_fund_from_Europe();
+    println!("{}", f);
+
+}
+
+trait USDTransactor {
+    fn new(name: String) -> Self;
+}
+
+trait EURTransactor {
+    fn get_fund_from_Europe(&self) -> i32;
+}
+
+impl Display for Country {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "name: {}, currency: {}, nuclear power: {:?}", self.name, self.currency, self.military_partner)
+    }
+}
+
+impl USDTransactor for Country {
+    fn new(name: String) -> Self {
+        Country { name, currency: String::from("USD"), military_partner: NuclearPowers::USA }
+    }
+}
+
+impl EURTransactor for Country {
+    fn get_fund_from_Europe(&self) -> i32 {
+        1000000
+    }
+}
+
+
+fn _generics() {
+
+
+
+
 }
 
 fn _common_collections() {
@@ -51,13 +121,6 @@ fn _common_collections() {
     let s3 = s + &s2;
 
     println!("{s3}");
-
-
-
-
-
-
-
 }
 
 
@@ -83,9 +146,12 @@ fn _work_on_struct() {
     //Calling method
     let n1 : &NuclearPowers = c2.get_nuclear_source();
     println!("Nuclear source of c2: {:?}", n1);
+
+    let capital = countries::get_country_capital(NuclearPowers::India);
+    println!("{}", &capital);
 }
 
-#[derive(Debug)]
+#[derive(Debug)] #[allow(dead_code)]
 struct Country {
     name: String,
     currency:String,
@@ -95,8 +161,7 @@ struct Country {
 // Methods and Associated functions
 impl Country {
     fn get_nuclear_source(&self) -> &NuclearPowers {
-        let s = &self.military_partner;
-        s
+         &self.military_partner
     }
 }
 
