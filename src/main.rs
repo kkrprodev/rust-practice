@@ -1,4 +1,5 @@
 mod countries;
+mod primitive_types;
 
 use std::fmt::{Display, Formatter};
 use std::fs::File;
@@ -21,15 +22,25 @@ fn main() {
 
     //_common_collections();
     //_generics();
-    _traits();
-
+    //_traits();
+    //_lifetimes();
 
     //_copy_from_file();
+
+    primitive_types::pt_str();
 
     println!("<< main()");
 }
 
+fn _lifetimes() {
+    let s1 = String::from("Krishna");
+    let s2 = String::from("Krishna");
 
+    let p1 = s1.as_ptr();
+    println!("{:?}", p1);
+    let p2 = s2.as_ptr();
+    println!("{:?}", p2);
+}
 
 
 fn _copy_from_file() {
@@ -65,13 +76,13 @@ trait EURTransactor {
 
 impl Display for Country {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "name: {}, currency: {}, nuclear power: {:?}", self.name, self.currency, self.military_partner)
+        write!(f, "name: {}, currency: {}", self.name, self.currency)
     }
 }
 
 impl USDTransactor for Country {
     fn new(name: String) -> Self {
-        Country { name, currency: String::from("USD"), military_partner: NuclearPowers::USA }
+        Country { name, currency: String::from("USD")}
     }
 }
 
@@ -127,12 +138,11 @@ fn _common_collections() {
 fn _work_on_struct() {
     let mut c1 : Country = Country {
         name: String::from("Sri Lanka"),
-        currency: String::from("Rupee"),
-        military_partner: NuclearPowers::India
+        currency: String::from("Rupee")
     };
     println!("Before update: c1 = {:?}", c1);
 
-    c1.military_partner = NuclearPowers::USA;
+    c1.currency = String::from("USD");
 
     println!("After update: c1 = {:?}", c1);
 
@@ -144,8 +154,8 @@ fn _work_on_struct() {
     println!("c1 partially moved its values to c2 = {:?}", c2);
 
     //Calling method
-    let n1 : &NuclearPowers = c2.get_nuclear_source();
-    println!("Nuclear source of c2: {:?}", n1);
+    let n1 : &str = c2.get_currency();
+    println!("Currency of c2: {:?}", n1);
 
     let capital = countries::get_country_capital(NuclearPowers::India);
     println!("{}", &capital);
@@ -155,13 +165,12 @@ fn _work_on_struct() {
 struct Country {
     name: String,
     currency:String,
-    military_partner: NuclearPowers,
 }
 
 // Methods and Associated functions
 impl Country {
-    fn get_nuclear_source(&self) -> &NuclearPowers {
-         &self.military_partner
+    fn get_currency(&self) -> &str {
+         &self.currency
     }
 }
 
