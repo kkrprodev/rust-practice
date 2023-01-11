@@ -1,5 +1,6 @@
 mod countries;
 mod primitive_types;
+mod collections;
 
 use std::fmt::{Display, Formatter};
 use std::fs::File;
@@ -20,14 +21,14 @@ fn main() {
 
     //_work_on_struct();
 
-    //_common_collections();
+    collections::_common_collections();
     //_generics();
     //_traits();
     //_lifetimes();
 
     //_copy_from_file();
 
-    primitive_types::pt_str();
+    //primitive_types::pt_str();
 
     println!("<< main()");
 }
@@ -98,40 +99,6 @@ fn _generics() {
 
 
 
-}
-
-fn _common_collections() {
-    let mut v : Vec<&str> = Vec::new();
-    v.push("Red");
-    v.push("Blue");
-    v.push("Green");
-    println!("Size: {}", v.len());
-
-    println!("Before popping: {:?}", v);
-    v.pop();
-    println!("After popping: {:?}", v);
-    v.push("Green");
-    v.push("Yellow");
-    v.push("Turquoise");
-    println!("{:?}", v);
-
-    for entry in v {
-        println!("Entry: {}", entry);
-    }
-
-    let mut s = String::new();
-    s.push_str("Hello");
-    println!("{s}");
-    s.pop();
-    println!("{s}");
-    s.push('o');
-
-    let s2 = String::from(" Rust");
-
-    // Value of s moved to s3
-    let s3 = s + &s2;
-
-    println!("{s3}");
 }
 
 
