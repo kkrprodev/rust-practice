@@ -1,6 +1,9 @@
+extern crate core;
+
 mod countries;
 mod primitive_types;
 mod collections;
+mod error_handling;
 
 use std::fmt::{Display, Formatter};
 use std::fs::File;
@@ -21,7 +24,7 @@ fn main() {
 
     //_work_on_struct();
 
-    collections::_common_collections();
+    //collections::_common_collections();
     //_generics();
     //_traits();
     //_lifetimes();
@@ -29,7 +32,7 @@ fn main() {
     //_copy_from_file();
 
     //primitive_types::pt_str();
-
+    error_handling::_error_handling();
     println!("<< main()");
 }
 
